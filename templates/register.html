@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Register</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">Full Name</label>
+            <input type="text" name="username" id="username" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select name="role" id="role" class="form-select" required>
+                <option value="">-- Select Role --</option>
+                <option value="Volunteer">Volunteer</option>
+                <option value="Donor">Donor</option>
+                <option value="Victim">Victim</option>
+            </select>
+        </div>
+
+        <!-- Volunteer fields -->
+        <div id="volunteer-fields" style="display:none;">
+            <div class="mb-3">
+                <label for="skills" class="form-label">Skills</label>
+                <input type="text" name="skills" id="skills" class="form-control" placeholder="First Aid, Cooking">
+            </div>
+
+            <div class="mb-3">
+                <label for="availability" class="form-label">Availability</label>
+                <input type="text" name="availability" id="availability" class="form-control" placeholder="Weekends, Evenings">
+            </div>
+        </div>
+
+        <!-- Victim location field -->
+        <div id="victim-location" style="display:none;">
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="location" id="location" class="form-control" placeholder="City, Area">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Register</button>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">Back to Login</a>
+    </form>
+</div>
+
+<script>
+    const roleSelect = document.getElementById('role');
+    const volunteerFields = document.getElementById('volunteer-fields');
+    const victimLocation = document.getElementById('victim-location');
+
+    roleSelect.addEventListener('change', () => {
+        if (roleSelect.value === 'Volunteer') {
+            volunteerFields.style.display = 'block';
+            victimLocation.style.display = 'none';
+            document.getElementById('location').required = false;
+        } else if (roleSelect.value === 'Victim') {
+            volunteerFields.style.display = 'none';
+            victimLocation.style.display = 'block';
+            document.getElementById('location').required = true;
+        } else {
+            volunteerFields.style.display = 'none';
+            victimLocation.style.display = 'none';
+            document.getElementById('location').required = false;
+        }
+    });
+</script>
+{% endblock %}

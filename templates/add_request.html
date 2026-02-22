@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Submit New Request</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="need_type" class="form-label">Need Type</label>
+            <select class="form-select" name="need_type" id="need_type" required>
+                <option value="" disabled selected>Select your need</option>
+                <option value="Food">Food</option>
+                <option value="Water">Water</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Clothes">Clothes</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </form>
+</div>
+{% endblock %}

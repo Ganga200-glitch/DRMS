@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Low Supplies Report</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Center</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in low_supplies %}
+            <tr>
+                <td>{{ s.item_name }}</td>
+                <td>{{ s.quantity }}</td>
+                <td>{{ s.center_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

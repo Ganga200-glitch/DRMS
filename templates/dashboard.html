@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ session.get('role') }} Dashboard</h2>
+    <p>Welcome, {{ session.get('role') }}!</p>
+    
+    {% if session.get('role') == 'Admin' %}
+    <div class="row mt-3">
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('relief_centers') }}" class="btn btn-primary btn-block">Relief Centers</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('volunteers') }}" class="btn btn-success btn-block">Volunteers</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('victims') }}" class="btn btn-warning btn-block">Victims</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('supplies') }}" class="btn btn-info btn-block">Supplies</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('admin_donations') }}" class="btn btn-danger btn-block">Donations</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('alerts') }}" class="btn btn-dark btn-block">Alerts</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('low_supplies_report') }}" class="btn btn-secondary btn-block">Low Supply Report</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('top_volunteers_report') }}" class="btn btn-success btn-block">Top Volunteers</a>
+        </div>
+    </div>
+
+    {% elif session.get('role') == 'Volunteer' %}
+    <div class="row mt-3">
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('volunteer_dashboard') }}" class="btn btn-primary btn-block">My Dashboard</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('volunteer_dashboard') }}" class="btn btn-success btn-block">My Tasks</a>
+        </div>
+    </div>
+
+    {% elif session.get('role') == 'Donor' %}
+    <div class="row mt-3">
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('donor_dashboard') }}" class="btn btn-primary btn-block">My Dashboard</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('donate') }}" class="btn btn-success btn-block">Make a Donation</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('donations') }}" class="btn btn-warning btn-block">Donation History</a>
+        </div>
+    </div>
+
+    {% elif session.get('role') == 'Victim' %}
+    <div class="row mt-3">
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('victim_dashboard') }}" class="btn btn-primary btn-block">My Dashboard</a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{{ url_for('add_request') }}" class="btn btn-success btn-block">Submit a Request</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

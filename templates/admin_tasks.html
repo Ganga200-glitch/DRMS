@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Tasks</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Volunteer</th>
+        <th>Victim</th>
+        <th>Task Description</th>
+        <th>Date Assigned</th>
+        <th>Status</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.volunteer_name }}</td>
+        <td>{{ task.victim_name or 'N/A' }}</td>
+        <td>{{ task.task_description }}</td>
+        <td>{{ task.date_assigned }}</td>
+        <td>{{ task.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

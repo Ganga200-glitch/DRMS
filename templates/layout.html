@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Relief Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ url_for('index') }}">DRMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            {% if 'user_id' in session %}
+                {% if session.get('role') == 'Admin' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('relief_centers') }}">Relief Centers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('volunteers') }}">Volunteers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('victims') }}">Victims</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('supplies') }}">Supplies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('alerts') }}">Alerts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('low_supplies_report') }}">Reports</a></li>
+                    <!-- ✅ Added Requests menu -->
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_requests') }}">Requests</a></li>
+                {% elif session.get('role') == 'Volunteer' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('volunteer_dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('volunteers') }}">My Tasks</a></li>
+                {% elif session.get('role') == 'Donor' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('donor_dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('donate') }}">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('donations') }}">My Donations</a></li>
+                {% elif session.get('role') == 'Victim' %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('victim_dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('victims') }}">My Requests</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-info">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

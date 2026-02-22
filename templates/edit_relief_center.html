@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Edit Relief Center</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" id="name" class="form-control" value="{{ center.name }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="location" id="location" class="form-control" value="{{ center.location }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="capacity" class="form-label">Capacity</label>
+        <input type="number" name="capacity" id="capacity" class="form-control" value="{{ center.capacity }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="supplies_stock" class="form-label">Supplies Stock</label>
+        <input type="number" name="supplies_stock" id="supplies_stock" class="form-control" value="{{ center.supplies_stock }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Center</button>
+    <a href="{{ url_for('relief_centers') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

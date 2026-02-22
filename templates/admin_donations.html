@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Donations</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Donor Name</th>
+            <th>Type</th>
+            <th>Amount / Quantity</th>
+            <th>Item Name</th>
+            <th>Center</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in donations %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.donor_name }}</td>
+            <td>{{ d.type }}</td>
+            <td>{{ d.amount or d.quantity }}</td>
+            <td>{{ d.item_name }}</td>
+            <td>{{ d.center_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

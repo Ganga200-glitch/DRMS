@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Add Victim</h2>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" name="name" id="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="need_type" class="form-label">Need Type</label>
+        <input type="text" name="need_type" id="need_type" class="form-control" placeholder="E.g., Food, Shelter, Medical Aid" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="location" id="location" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="assigned_center_id" class="form-label">Assign to Center</label>
+        <select name="assigned_center_id" id="assigned_center_id" class="form-select">
+            <option value="">--Select Center--</option>
+            {% for center in centers %}
+                <option value="{{ center.id }}">{{ center.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Victim</button>
+    <a href="{{ url_for('victims') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

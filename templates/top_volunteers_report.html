@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Top Volunteers Report</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Skills</th>
+                <th>Assigned Center</th>
+                <th>Tasks Completed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in top_volunteers %}
+            <tr>
+                <td>{{ v.name }}</td>
+                <td>{{ v.skills }}</td>
+                <td>{{ v.center_name or 'Unassigned' }}</td>
+                <td>{{ v.tasks_completed }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

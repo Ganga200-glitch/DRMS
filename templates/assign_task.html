@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Assign Task to Volunteer</h2>
+    <div class="card p-4 mb-4">
+        <form method="POST" action="{{ url_for('assign_task') }}">
+            <div class="form-group">
+                <label for="volunteer">Volunteer</label>
+                <select name="volunteer_id" id="volunteer" class="form-control" required>
+                    <option value="">Select Volunteer</option>
+                    {% for v in volunteers %}
+                        <option value="{{ v.id }}" {% if selected_volunteer_id==v.id %}selected{% endif %}>{{ v.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="victim">Victim (optional)</label>
+                <select name="victim_id" id="victim" class="form-control">
+                    <option value="">Select Victim</option>
+                    {% for vic in victims %}
+                        <option value="{{ vic.id }}">{{ vic.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Task Description</label>
+                <textarea name="task_description" id="description" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Assign Task</button>
+        </form>
+    </div>
+
+    <h3>All Tasks</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Volunteer</th>
+                <th>Victim</th>
+                <th>Task</th>
+                <th>Date Assigned</th>
+                <th>Date Completed</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.volunteer_name }}</td>
+                <td>{{ task.victim_name or 'N/A' }}</td>
+                <td>{{ task.task_description }}</td>
+                <td>{{ task.date_assigned }}</td>
+                <td>{{ task.date_completed or 'Pending' }}</td>
+                <td>
+                    {% if not task.date_completed %}
+                    <a href="{{ url_for('mark_task_completed', task_id=task.id) }}" class="btn btn-success btn-sm">Mark Completed</a>
+                    {% endif %}
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

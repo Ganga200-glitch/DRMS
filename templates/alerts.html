@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Alerts</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Message</th>
+                <th>Assigned Center</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in alerts %}
+            <tr>
+                <td>{{ a.id }}</td>
+                <td>
+                    <span style="color:red; font-weight:bold;">
+                        &#9888; <!-- Warning icon -->
+                        {{ a.message }}
+                    </span>
+                </td>
+                <td>{{ a.center_name or 'Unassigned' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4">Your Requests</h3>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Need Type</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.need_type }}</td>
+                        <td>{{ req.location }}</td>
+                        <td>
+                            {% if req.status == 'Pending' %}
+                                <span class="badge badge-warning">Pending</span>
+                            {% elif req.status == 'Approved' %}
+                                <span class="badge badge-success">Approved</span>
+                            {% elif req.status == 'Rejected' %}
+                                <span class="badge badge-danger">Rejected</span>
+                            {% else %}
+                                <span class="badge badge-secondary">{{ req.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ req.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

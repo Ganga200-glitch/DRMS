@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Victim</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" value="{{ victim.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Location</label>
+            <input type="text" class="form-control" name="location" value="{{ victim.location }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Need Type</label>
+            <input type="text" class="form-control" name="need_type" value="{{ victim.need_type }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Assign Center</label>
+            <select name="assigned_center_id" class="form-control">
+                <option value="">--Select--</option>
+                {% for c in centers %}
+                <option value="{{ c.id }}" {% if victim.assigned_center_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-success" type="submit">Update</button>
+    </form>
+</div>
+{% endblock %}

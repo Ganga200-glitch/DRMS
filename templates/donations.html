@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>My Donations</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Donor Name</th>
+                <th>Type</th>
+                <th>Amount/Item</th>
+                <th>Quantity</th>
+                <th>Center</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in donations %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.donor_name }}</td>
+                <td>{{ d.type }}</td>
+                <td>{{ d.amount or d.item_name }}</td>
+                <td>{{ d.quantity }}</td>
+                <td>{{ d.center_name or 'Unassigned' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

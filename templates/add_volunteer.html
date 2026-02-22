@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ volunteer and "Edit Volunteer" or "Add Volunteer" }}</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" name="name" id="name" class="form-control"
+               value="{{ volunteer.name if volunteer else '' }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="skills" class="form-label">Skills</label>
+        <input type="text" name="skills" id="skills" class="form-control"
+               value="{{ volunteer.skills if volunteer else '' }}" placeholder="First Aid, Cooking" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="availability" class="form-label">Availability</label>
+        <input type="text" name="availability" id="availability" class="form-control"
+               value="{{ volunteer.availability if volunteer else '' }}" placeholder="Weekends, Evenings" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="assigned_center_id" class="form-label">Assign to Center</label>
+        <select name="assigned_center_id" id="assigned_center_id" class="form-select">
+            <option value="">--Select Center--</option>
+            {% for center in centers %}
+                <option value="{{ center.id }}"
+                    {% if volunteer and volunteer.assigned_center_id == center.id %}selected{% endif %}>
+                    {{ center.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">{{ volunteer and "Update Volunteer" or "Add Volunteer" }}</button>
+    <a href="{{ url_for('volunteers') }}" class="btn btn-secondary">Back to Volunteers List</a>
+</form>
+{% endblock %}

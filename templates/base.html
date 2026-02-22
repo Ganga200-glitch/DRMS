@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DRMS - Disaster Relief Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>DRMS</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            {% if session.get('role') == 'Admin' %}
+                <a href="{{ url_for('volunteers') }}">Volunteers</a>
+                <a href="{{ url_for('victims') }}">Victims</a>
+                <a href="{{ url_for('relief_centers') }}">Relief Centers</a>
+                <a href="{{ url_for('supplies') }}">Supplies</a>
+                <a href="{{ url_for('admin_donations') }}">Donations</a>
+                <a href="{{ url_for('assign_task') }}">Assign Tasks</a>
+            {% elif session.get('role') == 'Volunteer' %}
+                <a href="{{ url_for('volunteer_dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('volunteer_tasks') }}">My Tasks</a>
+            {% elif session.get('role') == 'Donor' %}
+                <a href="{{ url_for('donor_dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('donate') }}">Donate</a>
+            {% elif session.get('role') == 'Victim' %}
+                <a href="{{ url_for('victim_dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('add_request') }}">Add Request</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; 2025 DRMS</p>
+    </footer>
+</body>
+</html>

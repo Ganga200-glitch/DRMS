@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Make a Donation</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label>Your Name</label>
+            <input type="text" class="form-control" name="donor_name" required>
+        </div>
+        <div class="mb-3">
+            <label>Donation Type</label>
+            <select name="type" class="form-control" required>
+                <option value="Money">Money</option>
+                <option value="Item">Item</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Amount (if Money)</label>
+            <input type="number" class="form-control" name="amount">
+        </div>
+        <div class="mb-3">
+            <label>Item Name (if Item)</label>
+            <input type="text" class="form-control" name="item_name">
+        </div>
+        <div class="mb-3">
+            <label>Quantity (if Item)</label>
+            <input type="number" class="form-control" name="quantity">
+        </div>
+        <div class="mb-3">
+            <label>Select Center</label>
+            <select name="center_id" class="form-control">
+                <option value="">--Select--</option>
+                {% for c in centers %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-success" type="submit">Donate</button>
+    </form>
+</div>
+{% endblock %}

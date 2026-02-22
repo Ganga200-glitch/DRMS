@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Supply</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label>Item Name</label>
+            <input type="text" class="form-control" name="item_name" value="{{ supply.item_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Quantity</label>
+            <input type="number" class="form-control" name="quantity" value="{{ supply.quantity }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Assign Center</label>
+            <select name="center_id" class="form-control">
+                <option value="">--Select--</option>
+                {% for c in centers %}
+                <option value="{{ c.id }}" {% if supply.center_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-success" type="submit">Update</button>
+    </form>
+</div>
+{% endblock %}

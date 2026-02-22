@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Tasks - DRMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('volunteer_dashboard') }}">DRMS</a>
+        <div class="ms-auto">
+            <a href="{{ url_for('volunteer_dashboard') }}" class="btn btn-light me-2">Dashboard</a>
+            <a href="{{ url_for('volunteer_tasks') }}" class="btn btn-light me-2">My Tasks</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-light">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <h2 class="mb-4">My Tasks</h2>
+
+    <!-- Task Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-2">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Total Tasks</h5>
+                    <p class="card-text fs-4">{{ tasks|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Completed</h5>
+                    <p class="card-text fs-4">{{ tasks|selectattr('date_completed')|list|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-2">
+            <div class="card text-white bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Pending</h5>
+                    <p class="card-text fs-4">{{ tasks|selectattr('date_completed', 'equalto', None)|list|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if tasks %}
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover bg-white shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>Task</th>
+                    <th>Victim</th>
+                    <th>Assigned On</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tasks %}
+                <tr>
+                    <td>{{ t.task_description }}</td>
+                    <td>{{ t.victim_name or 'N/A' }}</td>
+                    <td>{{ t.date_assigned }}</td>
+                    <td>
+                        {% if t.date_completed %}
+                            <span class="badge bg-success">Completed</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not t.date_completed %}
+                        <form action="{{ url_for('update_task', task_id=t.id) }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="status" value="completed">
+                            <button type="submit" class="btn btn-success btn-sm">Mark Completed</button>
+                        </form>
+                        {% else %}
+                            <span class="text-success fw-bold">Done</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">No tasks assigned yet.</div>
+    {% endif %}
+
+</div>
+
+<!-- Footer -->
+<footer class="text-center mt-4 mb-3 text-muted">
+    &copy; 2025 DRMS
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

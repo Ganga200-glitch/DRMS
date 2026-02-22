@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Victims</h2>
+    <a class="btn btn-primary mb-2" href="{{ url_for('add_victim') }}">Add Victim</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Need Type</th>
+                <th>Assigned Center</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in victims %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td>{{ v.name }}</td>
+                <td>{{ v.location }}</td>
+                <td>{{ v.need_type }}</td>
+                <td>{{ v.center_name or 'Unassigned' }}</td>
+                <td>
+                    <a href="{{ url_for('edit_victim', victim_id=v.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ v.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+document.querySelectorAll('.delete-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        if(confirm("Are you sure?")){
+            fetch('{{ url_for("delete_victim") }}',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({id:btn.dataset.id})
+            }).then(()=> location.reload())
+        }
+    })
+})
+</script>
+{% endblock %}
